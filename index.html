@@ -1,0 +1,21 @@
+<form id="form">
+  Name: <input id="name" /><br>
+  Message: <textarea id="message"></textarea><br>
+  <button type="submit">Send</button>
+</form>
+
+<script>
+document.getElementById('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const message = document.getElementById('message').value;
+
+  const res = await fetch('https://c9ip4ukkf5.execute-api.eu-west-1.amazonaws.com/default/send-message', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, message })
+  });
+  const data = await res.json();
+  alert(data.message + "\nFile key: " + data.file_key);
+});
+</script>
